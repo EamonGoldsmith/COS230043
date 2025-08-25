@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Template that uses Vue</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Vue -->
+    <script src="../framework/js/vue.min.js"></script> 
+
+</head>
+<body>
+    <h1>String Test</h1>
+
+    <div id="app">
+        <p>Please enter your name:
+            <input v-model="strName">
+        </p>
+    
+
+        <p v-if="strName.toLowerCase() === 'eamon'">Awesome Name!</p>
+        <p v-else>{{ strName }}, is a not my name!</p>
+    </div>
+
+    <script>
+        new Vue({
+        el: '#app',
+        data: {
+            strName: "type name here"
+        }
+        });
+    </script>
+</body>
+</html>
