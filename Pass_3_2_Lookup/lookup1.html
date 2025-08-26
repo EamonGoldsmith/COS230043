@@ -1,31 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Template that uses Vue</title>
+    <title>Table with Filtering</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Vue -->
-    <script src="../framework/js/vue.min.js"></script> 
-
+    <!-- Bootstrap -->
+    <link href="../framework/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>String Test</h1>
-
     <div id="app">
-        <p>Please enter your name:
-            <input v-model="strName">
-        </p>
-    
+        <!-- Title -->
+        <div id="container">
+            <div id="row">
+                <h1>Lookup App: Unit Search Filter</h1>
+            </div>
 
-        <p v-if="strName.toLowerCase() === 'eamon'">Awesome Name!</p>
-        <p v-else>{{ strName }}, is a not my name!</p>
+            <!-- Filter Controls -->
+            <div id="container">
+                <div id="row">
+                    <label for="code">Code:</label>
+                    <label for="desc">Description:</label>
+                    <p>Unit Type:</p>
+                </div>
+                <div id="row">
+                    <div id="col">
+                        
+                        <input type="text" name="code" v-model="unitCode">
+                    </div>
+                    <div id="col">
+                        
+                        <input type="text" name="desc" v-model="unitDesc">
+                    </div>
+                    <div id="col">
+                        
+                        <div id="row"><input type="radio" id="core" name="core" v-model="unitType">
+                        <label for="core">Core</label></div>
+                        <div id="row"><input type="radio" id="sd" name="sd" v-model="unitType">
+                        <label for="sd">Software Development</label></div>
+                        <div id="row"><input type="radio" id="sa" name="sa" v-model="unitType">
+                        <label for="sa">Software Analysis</label></div>
+                        <div id="row"><input type="radio" id="all" name="all" v-model="unitType">
+                        <label for="all">All</label></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table Headings -->
+            
+
+            <!-- Table -->
+            <table>
+                <caption>
+                    Front-end web developer course 2021
+                </caption>
+                <thead>
+                    <tr>
+                    <th scope="col">Code</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Credit Points</th>
+                    <th scope="col">Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in items">
+                    <td v-for="value in item">{{ value }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
+    <!-- Vue -->
+    <script src="../framework/js/vue.min.js"></script>
+    <!-- Attach file -->
+    <script src="3.2 resource.js"></script>
+    
     <script>
         new Vue({
         el: '#app',
         data: {
-            strName: "type name here"
+            unitCode: "",
+            unitDesc: "",
+            unitType: "",
+            items: fileData,
         }
         });
     </script>
