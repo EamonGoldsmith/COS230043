@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Table with Filtering</title>
+	<meta charset="UTF-8">
+	<!-- Bootstrap -->
+	<link href="../framework/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Vue -->
+	<script src="../framework/js/vue.min.js"></script>
+</head>
+
+<body>
+	<div id="app" class="container mt-5">
+		<h2 class="mb-4">Registration App</h2>
+		<div class="row g-3 p-2">
+			<form method="post" @submit="checkForm" action="https://mercury.swin.edu.au/it000000/formtest.php"
+				novalidate>
+				<div v-if="errors.length">
+					<h4><strong>Fix before submitting:</strong></h4>
+					<ul>
+						<li v-for="error in errors">{{ error }}</li>
+					</ul>
+				</div>
+				<fieldset>
+					<legend>Account Information</legend>
+					<!-- First name and last name -->
+					<div class="row mt-3">
+						<div class="col-12 col-md-6 mt-2">
+							<input v-model="fname" type="text" class="form-control" placeholder="First name"
+								aria-label="First name">
+						</div>
+						<div class="col-12 col-md-6 mt-2">
+							<input v-model="lname" type="text" class="form-control" placeholder="Last name"
+								aria-label="Last name">
+						</div>
+					</div>
+					<!-- Username -->
+					<div class="col mt-3">
+						<input v-model="uname" type="text" class="form-control" placeholder="Username"
+							aria-label="Username">
+					</div>
+					<!-- Email -->
+					<div class="input-group mt-3">
+						<span class="input-group-text" id="lbemail">@</span>
+						<input v-model="email" type="text" class="form-control" placeholder="name@example.com"
+							aria-label="Email">
+					</div>
+					<!-- Password and confirm password -->
+					<div class="row mt-3">
+						<div class="col-12 col-md-6 mt-2">
+							<label>Password</label>
+							<input v-model="password" type="text" class="form-control" placeholder="**********"
+								aria-label="Password">
+						</div>
+						<div class="col-12 col-md-6 mt-2">
+							<label>Confirm Password</label>
+							<input v-model="cpassword" type="text" class="form-control" placeholder="**********"
+								aria-label="Confirm Password">
+						</div>
+					</div>
+				</fieldset>
+
+				<fieldset>
+					<legend class="mt-5">Personal Information</legend>
+					<!-- Street Address and Post code -->
+					<div class="row mt-3">
+						<div class="col-12 col-md-10">
+							<label for="address" class="form-label">Street Address</label>
+							<input v-model="address" type="text" class="form-control" placeholder="1234 Main St">
+						</div>
+						<div class="col-12 col-md-2">
+							<label for="postcode" class="form-label">Postcode</label>
+							<input v-model="postcode" type="text" class="form-control" placeholder="1234">
+						</div>
+					</div>
+					<!-- Suburb -->
+					<div class="col-12 mt-3">
+						<label for="inputSuburb" class="form-label">Suburb</label>
+						<input v-model="suburb" type="text" class="form-control" id="inputSuburb"
+							placeholder="Hawthorn">
+					</div>
+					<!-- Mobile number -->
+					<div class="col-12 mt-3">
+						<label for="mobile" class="form-label">Mobile Number</label>
+						<input v-model="mobile" type="text" class="form-control" placeholder="0412 345 678">
+					</div>
+				</fieldset>
+
+				<!-- Submit button -->
+				<button type="submit" class="btn btn-primary mt-5">Submit</button>
+			</form>
+
+			<div class="col-4 mt-5">
+				<!-- Terms and conditions -->
+				<button type="button" class="btn" @click="tsacs = !tsacs">Terms and Conditions</button>
+			</div>
+
+			<p v-show="tsacs">
+				By registering, you agree to absolutely everything and nothing at the same time. You promise not to
+				summon ancient JavaScript bugs, unleash CSS chaos, or write inline styles unless absolutely necessary
+				(and even then, we’ll judge you silently). You also acknowledge that clicking “Submit” may result in
+				mild satisfaction, a passing grade, or spontaneous applause from your tutor. These terms are subject to
+				change depending on how much coffee the developer has consumed. Proceed with caution, curiosity, and at
+				least one semicolon;
+			</p>
+		</div>
+	</div>
+
+	<!-- Validation script -->
+	<script src="appregistration.js"></script>
+
+</body>
+
+</html>

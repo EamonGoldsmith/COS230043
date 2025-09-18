@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Table with Filtering</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="../framework/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="app">
+        <div id="container">
+            <!-- Title -->
+            <div id="row">
+                <h1>Registration App: Cloud Service</h1>
+            </div>
+
+            <form>
+                <!-- Login -->
+                <div id="row-4-md">
+                    <h2>Login Information</h2>
+                </div>
+
+                <div id="row-4-md" class="form-row d-flex align-items-center mb-3">
+                    <label for="userName" class="form-label me-2" style="min-width: 120px;">Enter user name:</label>
+                    <div style="width: 300px;">
+                        <input type="text" id="userName" class="form-control" v-model="userName">
+                    </div>
+                </div>
+
+                <div id="row-4-md" class="form-row d-flex align-items-center mb-3">
+                    <label for="passA" class="form-label me-2" style="min-width: 120px;">Enter password:</label>
+                    <div style="width: 300px;">
+                        <input type="password" name="passA" class="form-control" v-model="passWordA">
+                    </div>
+                </div>
+
+                <div id="row-4-md" class="form-row d-flex align-items-center mb-3">
+                    <label for="passB" class="form-label me-2" style="min-width: 120px;">Re-enter password:</label>
+                    <div style="width: 300px;">
+                        <input type="password" name="passB" class="form-control" v-model="passWordB">
+                    </div>
+                    <p v-show="passWordA != passWordB">Password does not match</p>
+                </div>
+
+                <!-- Phone -->
+                <h2>Phone Information</h2>
+                <div id="row">
+                    <div class="col-6-md">
+                        <h3>Operating System</h3>
+                        <div id="col" v-for="os in OSTypes" :key="os">
+                            <label class="form-label">{{os}}</label>
+                            <input class="form-check-input" type="radio" :value="os" name="os" v-model="osType">
+                        </div>
+                    </div>
+
+                    <h3>Model</h3>
+                    <p>Select phone model:</p>
+                    <div class="form-check">
+                        <select v-model="selected">
+                            <option disabled value="">Please select one</option>
+                            <option V-for="phone in phones">{{phone.model}}</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Summary -->
+            <div id="row">
+                <h2>Summary</h2>
+                <ul>
+                    <li>Username: {{ userName }}</li>
+                    <li>OS: {{ osType }}</li>
+                    <li>Phone: {{ selected }}</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Vue -->
+    <script src="../framework/js/vue.min.js"></script>
+    <!-- Attach file with units -->
+    <script src="3.4 resource.js"></script>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                userName: "",
+                passWordA: "",
+                passWordB: "",
+                osType: "",
+                selected: "",
+                phones: fileData,
+            },
+            computed: {
+                OSTypes() {
+                    let uniqueOS = [];
+                    this.phones.forEach((phone) => {
+                        if (!uniqueOS.includes(phone.os)) {
+                            uniqueOS.push(phone.os);
+                        }
+                    });
+
+                    return uniqueOS;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

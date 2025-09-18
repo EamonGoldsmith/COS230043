@@ -9,62 +9,58 @@
 </head>
 <body>
     <div id="app">
-        <!-- Title -->
-        <div id="container">
+        <div id="container" style="padding-left: 5%">
+            <!-- Title -->
             <div id="row">
                 <h1>Lookup App: Unit Search Filter</h1>
             </div>
 
             <!-- Filter Controls -->
-            <div id="container">
-                <div id="row">
-                    <label for="code">Code:</label>
-                    <label for="desc">Description:</label>
-                    <p>Unit Type:</p>
+            <form class="row g-3">
+                <div class="col-md-3">
+                    <label for="code" class="form-label">Code:</label>
+                    <input type="text" name="code" class="form-control" v-model="unitCode">
                 </div>
-                <div id="row">
-                    <div id="col">
-                        
-                        <input type="text" name="code" v-model="unitCode">
+                <div class="col-md-3">
+                    <label for="desc" class="form-label">Description:</label>
+                    <input type="text" name="desc" class="form-control" v-model="unitDesc">
+                </div>
+                <div class="col-md-6">
+                    <p>Unit Type:</p>
+                    <div id="row"><input type="radio" id="core" value="Core" class="form-check-input" v-model="unitType">
+                        <label for="core" class="form-check-label">Core</label>
                     </div>
-                    <div id="col">
-                        
-                        <input type="text" name="desc" v-model="unitDesc">
+                    <div id="row"><input type="radio" id="sd" value="Software Development" class="form-check-input" v-model="unitType">
+                        <label for="sd" class="form-check-label">Software Development</label>
                     </div>
-                    <div id="col">
-                        
-                        <div id="row"><input type="radio" id="core" name="core" v-model="unitType">
-                        <label for="core">Core</label></div>
-                        <div id="row"><input type="radio" id="sd" name="sd" v-model="unitType">
-                        <label for="sd">Software Development</label></div>
-                        <div id="row"><input type="radio" id="sa" name="sa" v-model="unitType">
-                        <label for="sa">Software Analysis</label></div>
-                        <div id="row"><input type="radio" id="all" name="all" v-model="unitType">
-                        <label for="all">All</label></div>
-                        </div>
+                    <div id="row"><input type="radio" id="sa" value="Systems Analysis" class="form-check-input" v-model="unitType">
+                        <label for="sa" class="form-check-label">Software Analysis</label>
+                    </div>
+                    <div id="row"><input type="radio" id="all" value="All" class="form-check-input" v-model="unitType">
+                        <label for="all" class="form-check-label">All</label>
                     </div>
                 </div>
             </div>
 
-            <!-- Table Headings -->
-            
-
             <!-- Table -->
-            <table>
-                <caption>
-                    Front-end web developer course 2021
-                </caption>
-                <thead>
+            <table class="table table-bordered table-hover table-sm table-striped">
+                <thead class="table-light">
                     <tr>
-                    <th scope="col">Code</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Credit Points</th>
-                    <th scope="col">Type</th>
+                        <th scope="col">Code</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Credit Points</th>
+                        <th scope="col">Type</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="item in items">
-                    <td v-for="value in item">{{ value }}</td>
+                    <!-- Conditionally render unit info based on filters -->
+                    <tr v-for="item in items" v-if="
+                        ((item.code == unitCode) || (unitCode == '')) &&
+                        ((item.desc == unitDesc) || (unitDesc == '')) &&
+                        ((item.type == unitType) || (unitType == 'All'))">
+
+                        <!-- Render each value using list also -->
+                        <td v-for="value in item">{{ value }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -73,19 +69,20 @@
 
     <!-- Vue -->
     <script src="../framework/js/vue.min.js"></script>
-    <!-- Attach file -->
+    <!-- Attach file with units -->
     <script src="3.2 resource.js"></script>
-    
+
     <script>
         new Vue({
-        el: '#app',
-        data: {
-            unitCode: "",
-            unitDesc: "",
-            unitType: "",
-            items: fileData,
-        }
+            el: '#app',
+            data: {
+                unitCode: "",
+                unitDesc: "",
+                unitType: "All",
+                items: fileData,
+            }
         });
     </script>
 </body>
+
 </html>

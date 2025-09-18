@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Table with Filtering</title>
+    <meta charset="UTF-8">
+    <!-- Bootstrap -->
+    <link href="../framework/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Vue -->
+    <script src="../framework/js/vue.min.js"></script> 
+</head>
+
+<body>
+    <div id="app" class="container mt-5">
+        <h2 class="mb-4">Registration App: Cloud Service</h2>
+
+        <!-- Login Information -->
+        <div class="mb-4">
+            <h4>Login Information</h4>
+            <div class="mb-3 d-flex align-items-center">
+                <label for="username" class="form-label me-2" style="min-width: 120px;">Enter user name:</label>
+                <input type="text" id="username" class="form-control" v-model="username" style="max-width: 300px;">
+            </div>
+            <div class="mb-3 d-flex align-items-center">
+                <label for="password" class="form-label me-2" style="min-width: 120px;">Enter password:</label>
+                <input type="password" id="password" class="form-control" v-model="password" style="max-width: 300px;">
+            </div>
+            <div class="mb-3 d-flex align-items-center">
+                <label for="confirmPassword" class="form-label me-2" style="min-width: 120px;">Re-enter password:</label>
+                <input type="password" id="confirmPassword" class="form-control" v-model="confirmPassword"
+                    style="max-width: 300px;">
+            </div>
+            <p v-show="password != confirmPassword">Password does not match</p>
+        </div>
+
+        <!-- Phone Information -->
+        <div id="row" class="mb-4">
+            <h4>Phone Information</h4>
+            <div id="col-6-md" class="mb-3">
+                <label class="form-label">Operating System:</label>
+                <div id="row" class="d-flex">
+                    <div class="form-check" v-for="os in OSTypes" :key="os">
+                        <input class="form-check-input" type="radio" :id="os" :value="os" v-model="selectedOS" name="os">
+                        <label class="form-check-label" :for="os">{{ os }}</label>
+                    </div>
+                </div>
+            </div>
+            <div id="col-6-md" class="mb-3">
+                <label for="model" class="form-label">Please select phone model:</label>
+                <select id="model" class="form-select" v-model="selectedModel">
+                    <option disabled value=""></option>
+                    <option v-for="phone in phones" :key="phone">{{ phone.model }}</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="mb-4">
+            <h4>Summary</h4>
+            <p><strong>Username:</strong> {{ username }}</p>
+            <p><strong>Operating System:</strong> {{ selectedOS }}</p>
+            <p><strong>Phone Model:</strong> {{ selectedModel }}</p>
+        </div>
+    </div>
+
+    <!-- Attach file with units -->
+    <script src="3.4 resource.js"></script>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                username: '',
+                password: '',
+                confirmPassword: '',
+                selectedOS: '',
+                selectedModel: '',
+                phones: fileData
+            },
+            computed: {
+                OSTypes() {
+                    let uniqueOS = [];
+                    this.phones.forEach((phone) => {
+                        if (!uniqueOS.includes(phone.os)) {
+                            uniqueOS.push(phone.os);
+                        }
+                    });
+
+                    return uniqueOS;
+                }
+            }
+        });
+
+    </script>
+</body>
+
+</html>

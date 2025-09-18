@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>BMI Calculator</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Vue -->
+    <script src="../framework/js/vue.min.js"></script> 
+
+</head>
+<body>
+    <h1>Compute App</h1>
+
+    <div id="app">
+        <p>Enter weight in kilograms:
+            <input type="number" v-model="numWt">
+        </p>
+	<p>Enter height in centimeters:
+            <input type="number" v-model="numHt">
+        </p>
+
+        <p>Computed BMI is: {{ calc_bmi }} {{ bmi_range_text }}</p>
+    </div>
+
+    <script>
+        new Vue({
+        el: '#app',
+        data: {
+            numWt: 0,
+	    numHt: 0,
+        },	
+	computed: {
+		// limit answer to 2 dp
+		calc_bmi() {
+			if (this.numHt == 0 || this.numWt == 0) return 0;
+			const tmp = this.numHt / 100; // convert from cm to m
+			var result = this.numWt / (tmp * tmp);
+			return result.toFixed(2);
+		},
+		// get text of range
+		bmi_range_text() {
+			const bmi = parseFloat(this.calc_bmi);
+			if (bmi < 16) {
+				return 'Severely Thin';
+			} else if (bmi < 17) {
+				return 'Moderately Thin';
+			} else if (bmi < 18.5) {
+				return 'Mildly Thin';
+			} else if (bmi < 25) {
+				return 'Normal';
+			} else if (bmi < 30) {
+				return 'Overweight';
+			} else if (bmi < 35) {
+				return 'Obese';
+			} else {
+				return 'Severely Obese';
+			}
+		}
+	}
+        });
+    </script>
+</body>
+</html>
